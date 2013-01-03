@@ -37,6 +37,10 @@ ifconfig-pool-persist /etc/openvpn/ipp.txt
 <%= node["openvpn"]["type"] %> <%= node["openvpn"]["subnet"] %> <%= node["openvpn"]["netmask"] %>
 <% end -%>
 
+<% if node["openvpn"]["type"] == "server-bridge" -%>
+<%= node["openvpn"]["type"] %> <%= node["openvpn"]["subnet"] %> <%= node["openvpn"]["netmask"] %> <%= node["openvpn"]["ip-pool-floor"] %> <%= node["openvpn"]["ip-pool-ceiling"] %>
+<% end -%>
+
 user nobody
 group nogroup
 
