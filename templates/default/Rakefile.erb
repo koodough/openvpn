@@ -46,7 +46,11 @@ task :client do
 
     conf = <<EOF
 client
+<% if node["openvpn"]["type"] == "server-bridge" -%>
+dev tap
+<% else -%>
 dev tun
+<% end -%>
 proto udp
 remote <%= node["openvpn"]["gateway"] %> <%= node["openvpn"]["port"] %>
 resolv-retry infinite
