@@ -1,5 +1,9 @@
 client
+<% if node["openvpn"]["type"] == "server-bridge" -%>
+dev tap
+<% else -%>
 dev tun
+<% end -%>
 proto <%= node["openvpn"]["proto"] %>
 remote <%= node["openvpn"]["gateway"] %> <%= node["openvpn"]["port"] %>
 resolv-retry infinite
