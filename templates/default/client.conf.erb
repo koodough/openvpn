@@ -1,6 +1,7 @@
 client
 <% if node["openvpn"]["type"] == "server-bridge" -%>
 dev tap
+client-to-client
 <% else -%>
 dev tun
 <% end -%>
