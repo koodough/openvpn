@@ -15,3 +15,8 @@ cert <%= @username %>.crt
 key <%= @username %>.key
 comp-lzo
 verb 3
+
+# Downgrade privileges after initialization (non-Windows only)
+# TODO Comment out for windows machines
+user nobody
+group nobody
