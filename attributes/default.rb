@@ -20,7 +20,7 @@
 default["openvpn"]["local"]   = node["ipaddress"]
 default["openvpn"]["proto"]   = "udp"
 default["openvpn"]["port"]    = "1194"
-default["openvpn"]["type"]    = "server"
+default["openvpn"]["type"]    = "server" #server or server-bridge
 default["openvpn"]["subnet"]  = "10.8.0.0"
 default["openvpn"]["topology"] = "subnet"
 default["openvpn"]["netmask"] = "255.255.0.0"
@@ -34,6 +34,7 @@ default["openvpn"]["signing_ca_key"]  = "#{node["openvpn"]["key_dir"]}/ca.key"
 default["openvpn"]["signing_ca_cert"] = "#{node["openvpn"]["key_dir"]}/ca.crt"
 default["openvpn"]["routes"] = []
 default["openvpn"]["script_security"] = 1
+default['openvpn']['client_to_client'] = true
 
 # Direction for TLS authentication isn't used unless tls_auth is
 # defined too.
