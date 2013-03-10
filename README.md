@@ -3,6 +3,10 @@ Description
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline, but your site will need probably need to customize.
 
+Supports
+* ethernet routing (tun interfaces)
+* ethernet bridging (tap interfaces)
+
 Requirements
 ============
 
@@ -23,7 +27,6 @@ The `yum` cookbook by Opscode provides `recipe[yum::epel]` that can be used on R
 This cookbook is designed to set up a basic installation of OpenVPN that will work for many common use cases. The following configurations are not supported by default with this cookbook:
 
 * setting up routers and other network devices
-* ethernet-bridging (tap interfaces)
 * dual-factor authentication
 * many other advanced OpenVPN configurations
 
