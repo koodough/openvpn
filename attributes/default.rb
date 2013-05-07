@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-default["openvpn"]["local"]   = node["ipaddress"]
+default["openvpn"]["local"]   = "#{node["ipaddress"]}"
 default["openvpn"]["proto"]   = "udp"
 default["openvpn"]["port"]    = "1194"
 default["openvpn"]["type"]    = "server" #server or server-bridge
@@ -27,7 +27,8 @@ default["openvpn"]["netmask"] = "255.255.0.0"
 default["openvpn"]["ip-pool-floor"] = "10.8.0.50"
 default["openvpn"]["ip-pool-ceiling"] = "10.8.0.150"
 
-default["openvpn"]["gateway"] = "vpn.#{node["domain"]}"
+#default["openvpn"]["gateway"] = "vpn.#{node["domain"]}"
+default["openvpn"]["gateway"] = "#{node["ipaddress"]}"
 default["openvpn"]["log"]     = "/var/log/openvpn.log"
 default["openvpn"]["key_dir"] = "/etc/openvpn/keys"
 default["openvpn"]["signing_ca_key"]  = "#{node["openvpn"]["key_dir"]}/ca.key"
