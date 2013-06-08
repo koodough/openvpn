@@ -16,6 +16,10 @@ key <%= @username %>.key
 comp-lzo
 verb 3
 
+<% if node['openvpn']['keepalive'] -%>
+keepalive <%= node['openvpn']['keepalive'] %>
+<% end %>
+
 <% if node['openvpn']['cipher'] -%>
 cipher <%= node['openvpn']['cipher'] %>
 <% end %>
