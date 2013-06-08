@@ -16,6 +16,10 @@ key <%= @username %>.key
 comp-lzo
 verb 3
 
+<% if node['openvpn']['cipher'] -%>
+cipher <%= node['openvpn']['cipher'] %>
+<% end %>
+
 # Downgrade privileges after initialization (non-Windows only)
 # TODO Comment out for windows machines
 user nobody
