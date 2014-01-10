@@ -17,13 +17,15 @@
 # limitations under the License.
 #
 
+dir = node["openvpn"]["dir"]
+
 search("users", "*:*") do |u|
   execute "generate-openvpn-#{u['id']}" do
     command "./pkitool #{u['id']}"
-    cwd "/etc/openvpn/easy-rsa"
+    cwd node["openvpn"]["dir"]+"/easy-rsa"
     environment(
-      'EASY_RSA' => '/etc/openvpn/easy-rsa',
-      'KEY_CONFIG' => '/etc/openvpn/easy-rsa/openssl.cnf',
+      'EASY_RSA' => node["openvpn"]["dir"]+'/easy-rsa',
+      'KEY_CONFIG' => node["openvpn"]["dir"]+'/easy-rsa/openssl.cnf',
       'KEY_DIR' => node["openvpn"]["key_dir"],
       'CA_EXPIRE' => node["openvpn"]["key"]["ca_expire"].to_s,
       'KEY_EXPIRE' => node["openvpn"]["key"]["expire"].to_s,
@@ -52,3 +54,4 @@ search("users", "*:*") do |u|
     not_if { ::File.exists?("#{node["openvpn"]["key_dir"]}/#{u['id']}.tar.gz") }
   end
 end
+

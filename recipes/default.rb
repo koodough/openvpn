@@ -21,11 +21,18 @@ routes = node['openvpn']['routes']
 routes << node['openvpn']['push'] if node['openvpn'].attribute?('push')
 node.default['openvpn']['routes'] = routes.flatten
 
+dir = node["openvpn"]["dir"]
 key_dir = node["openvpn"]["key_dir"]
 key_size = node["openvpn"]["key"]["size"]
 
 package "openvpn" do
   action :install
+end
+
+directory dir do
+  owner "root"
+  group "root"
+  mode 0700
 end
 
 directory key_dir do
@@ -34,14 +41,14 @@ directory key_dir do
   mode 0700
 end
 
-directory "/etc/openvpn/easy-rsa" do
+directory "#{dir}/easy-rsa" do
   owner "root"
   group "root"
   mode 0755
 end
 
 %w{openssl.cnf pkitool vars Rakefile}.each do |f|
-  template "/etc/openvpn/easy-rsa/#{f}" do
+  template "#{dir}/easy-rsa/#{f}" do
     source "#{f}.erb"
     owner "root"
     group "root"
@@ -49,7 +56,7 @@ end
   end
 end
 
-template "/etc/openvpn/server.up.sh" do
+template "#{dir}/server.up.sh" do
   source "server.up.sh.erb"
   owner "root"
   group "root"
@@ -113,7 +120,7 @@ bash "openvpn-server-key" do
   not_if { ::File.exists?("#{key_dir}/server.crt") }
 end
 
-template "/etc/openvpn/server.conf" do
+template "#{dir}/server.conf" do
   source "server.conf.erb"
   owner "root"
   group "root"
@@ -131,4 +138,15 @@ end
 
 service "openvpn" do
   action [:enable, :start]
+end
+
+if node["openvpn"]["rclocal"] == true
+        
+include_recipe "line-cookbook"
+
+append_if_no_line "cd #{dir}; openvpn --config ./server.conf &" do
+  path "/etc/rc.local"
+  line "cd #{dir}; openvpn --config ./server.conf &"
+end
+
 end

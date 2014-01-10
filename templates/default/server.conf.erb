@@ -20,18 +20,18 @@ local <%= node["openvpn"]["local"] %>
 <%= route %>
 <% end -%>
 <% end -%>
-up /etc/openvpn/server.up.sh
+up <%= node["openvpn"]["dir"] %>/server.up.sh
 
 # Keys and certificates.
-ca   /etc/openvpn/keys/ca.crt
-key  /etc/openvpn/keys/server.key # This file should be kept secret. 
-cert /etc/openvpn/keys/server.crt
-dh   /etc/openvpn/keys/dh<%= node["openvpn"]["key"]["size"] %>.pem
+ca   <%= node["openvpn"]["dir"] %>/keys/ca.crt
+key  <%= node["openvpn"]["dir"] %>/keys/server.key # This file should be kept secret. 
+cert <%= node["openvpn"]["dir"] %>/keys/server.crt
+dh   <%= node["openvpn"]["dir"] %>/keys/dh<%= node["openvpn"]["key"]["size"] %>.pem
 <% if node['openvpn']['tls_auth'] -%>
 tls-auth <%= node['openvpn']['tls_auth'] %> <%= node['openvpn']['tls_auth_direction'] %>
 <% end -%>
 
-ifconfig-pool-persist /etc/openvpn/ipp.txt
+ifconfig-pool-persist <%= node["openvpn"]["dir"] %>/ipp.txt
 
 <% if node["openvpn"]["type"] == "server" -%>
 <%= node["openvpn"]["type"] %> <%= node["openvpn"]["subnet"] %> <%= node["openvpn"]["netmask"] %>
@@ -53,7 +53,7 @@ persist-key
 persist-tun
 
 # current client connections
-status /etc/openvpn/openvpn-status.log
+status <%= node["openvpn"]["dir"] %>/openvpn-status.log
 
 # logging settings.
 log-append  <%= node["openvpn"]["log"] %>
