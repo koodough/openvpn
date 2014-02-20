@@ -8,10 +8,11 @@ proto <%= node["openvpn"]["proto"] %>
 
 <% if node["openvpn"]["remote"] -%>
 
+<% $i=0 %>
 <% for i < node["openvpn"]["remote"]["gateway"].count do %>
 
 remote node["openvpn"]["remote"]["gateway"][$i] node["openvpn"]["remote"]["port"][$i];
-
+<% $i++; %>
 <% end %>
 
 <% else -%>
