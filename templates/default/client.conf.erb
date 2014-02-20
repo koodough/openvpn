@@ -5,7 +5,19 @@ dev tap
 dev tun
 <% end -%>
 proto <%= node["openvpn"]["proto"] %>
+
+<% if node["openvpn"]["remote"] -%>
+
+<% for i < node["openvpn"]["remote"]["gateway"].count do %>
+
+remote node["openvpn"]["remote"]["gateway"][$i] node["openvpn"]["remote"]["port"][$i];
+
+<% end %>
+
+<% else -%>
 remote <%= node["openvpn"]["gateway"] %> <%= node["openvpn"]["port"] %>
+<% end -%>
+
 resolv-retry infinite
 nobind
 persist-key
